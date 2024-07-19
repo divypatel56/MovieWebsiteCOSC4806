@@ -26,5 +26,26 @@ class SearchMovie extends Controller {
       exit();
     }
   }
+
+   // Display the movie details for the given movie
+  public function movie($movieName) {
+    $movieName = urldecode($movieName); // Decode the movie name
+
+    // Check if the movie name is empty
+    if (empty($movieName)) {
+        $this->view('searchmovie/index', ['error' => 'Please enter a movie name.']);
+        return;
+    }
+
+    // Fetch movie details from the API model
+    $apiModel = $this->model('API');
+    $movieDetails = $apiModel->getMovieDetails($movieName);
+
+    // Check if there was an error fetching movie details
+    if (isset($movieDetails['Error'])) {
+        echo "Error fetching movie details: " . $movieDetails['Error'];
+        return;
+    }
+  }
 }
 ?>
