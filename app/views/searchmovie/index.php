@@ -13,6 +13,11 @@
                     <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </form>
+          <?php if (isset($data['error'])): ?>
+              <div class="alert alert-danger mt-3">
+                  <?php echo $data['error']; ?>
+              </div>
+          <?php endif; ?>
         </div>
     </div>
 </main>
