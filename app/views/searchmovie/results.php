@@ -1,4 +1,4 @@
-<?php require_once 'app/views/templates/movieheader.php'; ?>
+<?php require_once 'app/views/templates/headerPublic.php'; ?>
 
 <main role="main" class="container my-5">
     <div class="page-header text-center mb-4">
@@ -46,11 +46,28 @@
         </div>
     </div>
 
+    <div class="row mt-4" id="rating-cards" style="display: none;">
+        <div class="col-12">
+            <div class="card mb-3 shadow" style="background-color: #f8f9fa; border-color: #e9ecef;">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Rate this Movie</h5>
+                    <div class="btn-group" role="group" aria-label="Rating Cards">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <button class="btn btn-outline-primary rating-card" data-rating="<?php echo $i; ?>">
+                                <?php echo $i; ?>
+                            </button>
+                        <?php endfor; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row mt-4">
         <div class="col-12">
             <div class="card mb-3 shadow" style="background-color: #f8f9fa; border-color: #e9ecef;">
                 <div class="card-body">
-                    <h5 class="card-title">Movie Review</h5>
+                    <h5 class="card-title">Movie review</h5>
                     <p class="card-text"><?php echo nl2br(htmlspecialchars($data['generatedReview'])); ?></p>
                 </div>
             </div>
@@ -59,29 +76,37 @@
 </main>
 
 <script>
-        document.getElementById('rate-movie-btn').addEventListener('click', function() {
-            var isLoggedIn = <?php echo isset($_SESSION['auth']) ? 'true' : 'false'; ?>;
-            if (!isLoggedIn) {
-                window.location.href = '/login';
-                return;
-            }
+// Assume user is logged in if this variable is true, otherwise false
+var isLoggedIn = <?php echo isset($_SESSION['auth']) ? 'true' : 'false'; ?>;
 
-            var rating = prompt("Please enter your rating (1-5):");
-            if (rating !== null) {
-                var movieName = "<?php echo $data['movie']['Title']; ?>";
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "/searchmovie/rate", true);
-                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        alert("Rating submitted successfully!");
-                        document.getElementById('user-rating').style.display = 'block';
-                        document.getElementById('user-rating-value').textContent = rating;
-                    }
-                };
-                xhr.send("rating=" + rating + "&movie_name=" + movieName);
+document.getElementById('rate-movie-btn').addEventListener('click', function() {
+    if (isLoggedIn) {
+        var ratingCards = document.getElementById('rating-cards');
+        ratingCards.style.display = ratingCards.style.display === 'none' ? 'block' : 'none';
+    } else {
+        window.location.href = '/login'; // Redirect to login page if not logged in
+    }
+});
+
+document.querySelectorAll('.rating-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+        var rating = this.getAttribute('data-rating');
+        var movieName = "<?php echo htmlspecialchars($data['movie']['Title']); ?>";
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/searchmovie/rate", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById('user-rating-value').textContent = rating;
+                document.getElementById('user-rating').style.display = 'block'; // Show the user rating
+                document.getElementById('rating-cards').style.display = 'none'; // Hide the rating cards after selection
+            } else if (xhr.readyState === 4 && xhr.status === 401) {
+                window.location.href = '/login'; // Redirect to login page if unauthorized
             }
-        });
+        };
+        xhr.send("rating=" + encodeURIComponent(rating) + "&movie_name=" + encodeURIComponent(movieName));
+    });
+});
 </script>
 
 <?php require_once 'app/views/templates/footer.php'; ?>
