@@ -1,4 +1,4 @@
-<?php require_once 'app/views/templates/headerPublic.php'; ?>
+<?php require_once 'app/views/templates/movieheader.php'; ?>
 
 <main role="main" class="container my-5">
     <div class="page-header text-center mb-4">

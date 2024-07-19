@@ -97,7 +97,7 @@ class User {
           $_SESSION['userid'] = $user['id'];
           $this->log_attempt($username, 'good');
           unset($_SESSION['failedAuth']);
-          header('Location: /home');
+           header('Location: /searchmovie/index');
           exit;
       }else { //else increment failed attempts and log attempt(Bad)
           if (isset($_SESSION['failedAuth'])) {
