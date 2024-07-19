@@ -45,33 +45,34 @@
             </div>
         </div>
     </div>
-    <div class="text-center">
-        <a href="/searchmovie" class="btn btn-secondary mt-3">Back to Search</a>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card mb-3 shadow" style="background-color: #f8f9fa; border-color: #e9ecef;">
+                <div class="card-body">
+                    <h5 class="card-title">Movie Review</h5>
+                    <p class="card-text"><?php echo nl2br(htmlspecialchars($data['generatedReview'])); ?></p>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 
 <script>
 document.getElementById('rate-movie-btn').addEventListener('click', function() {
-    var isLoggedIn = <?php echo isset($_SESSION['auth']) ? 'true' : 'false'; ?>;
-    if (!isLoggedIn) {
-        window.location.href = '/login';
-        return;
-    }
-
     var rating = prompt("Please enter your rating (1-5):");
     if (rating !== null) {
-        var movieName = "<?php echo addslashes($data['movie']['Title']); ?>"; // Ensure proper escaping
+        var movieName = "<?php echo htmlspecialchars($data['movie']['Title']); ?>";
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/searchmovie/rate", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                alert("Rating submitted successfully!");
-                document.getElementById('user-rating').style.display = 'block';
-                document.getElementById('user-rating-value').textContent = rating;
+                alert(xhr.responseText);
+                location.reload();
             }
         };
-        xhr.send("rating=" + rating + "&movie_name=" + encodeURIComponent(movieName));
+        xhr.send("rating=" + encodeURIComponent(rating) + "&movie_name=" + encodeURIComponent(movieName));
     }
 });
 </script>
