@@ -24,7 +24,7 @@ if (!isset($_SESSION['auth'])) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/#">Search Movie</a>
+                    <a class="nav-link" href="/searchmovie">Search Movie</a>
                 </li>
                 
             </ul>

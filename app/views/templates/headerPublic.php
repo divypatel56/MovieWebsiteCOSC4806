@@ -28,7 +28,7 @@
                       <a class="nav-link" href="/login">Login</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="/#">Search Movie</a>
+                      <a class="nav-link" href="/searchmovie">Search Movie</a>
                   </li>
               </ul>
           </div>
