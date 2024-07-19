@@ -20,6 +20,17 @@ class SearchMovie extends Controller {
         $this->view('searchmovie/index', ['error' => 'Please enter a movie name.']);
         return;
       }
+
+      $movieModel = $this->model('Movie');
+      $ratings = $movieModel->getRatingsByMovie($movieName);
+
+      $userRating = null;
+      if (isset($_SESSION['auth'])) {
+          $userId = $_SESSION['userid'];
+          $userRating = $movieModel->getUserRating($movieName, $userId);
+      }
+
+      $this->view('searchmovie/results', ['movie' => $movieDetails, 'ratings' => $ratings, 'userRating' => $userRating]);
       
       // Redirect to the movie details function with the movie name
       header("Location: /searchmovie/movie/" . urlencode($movieName));
@@ -42,12 +53,38 @@ class SearchMovie extends Controller {
     $movieDetails = $apiModel->getMovieDetails($movieName);
 
     // Check if there was an error fetching movie details
-    if (isset($movieDetails['Error'])) {
+      if (isset($movieDetails['Error'])) {
         echo "Error fetching movie details: " . $movieDetails['Error'];
         return;
+      }
+    
+    $movieModel = $this->model('Movie');
+    $ratings = $movieModel->getRatingsByMovie($movieName);
+
+    $userRating = null;
+    if (isset($_SESSION['auth'])) {
+        $userId = $_SESSION['userid'];
+        $userRating = $movieModel->getUserRating($movieName, $userId);
     }
-    // Pass movie details to the view
-    $this->view('searchmovie/results', ['movie' => $movieDetails]);
+
+    $this->view('searchmovie/results', ['movie' => $movieDetails, 'ratings' => $ratings, 'userRating' => $userRating]);
+  }
+
+  //Handel the rate movie button
+  public function rate() {
+      if (!isset($_SESSION['auth'])) {
+          echo "You need to be logged in to rate a movie.";
+          return;
+      }
+
+      $userId = $_SESSION['userid'];
+      $rating = $_POST['rating'];
+      $movieName = $_POST['movie_name'];
+
+      $movieModel = $this->model('Movie');
+      $movieModel->addRatings($movieName, $userId, $rating);
+
+      echo "Rating submitted successfully!";
   }
 }
 ?>
