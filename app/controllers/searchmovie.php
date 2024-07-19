@@ -46,6 +46,8 @@ class SearchMovie extends Controller {
         echo "Error fetching movie details: " . $movieDetails['Error'];
         return;
     }
+    // Pass movie details to the view
+    $this->view('searchmovie/results', ['movie' => $movieDetails]);
   }
 }
 ?>
