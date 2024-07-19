@@ -6,11 +6,15 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6 mx-auto">
-            <div class="card mb-3">
+        <div class="col-md-4">
+            <div class="card mb-3 shadow">
                 <img src="<?php echo $data['movie']['Poster']; ?>" class="card-img-top img-fluid" alt="<?php echo $data['movie']['Title']; ?>">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card mb-3 shadow">
                 <div class="card-body">
-                    <h5 class="card-title"><?php echo $data['movie']['Title']; ?></h5>
+                    <h2 class="card-title"><?php echo $data['movie']['Title']; ?></h2>
                     <p class="card-text"><strong>Year:</strong> <?php echo $data['movie']['Year']; ?></p>
                     <p class="card-text"><strong>Rated:</strong> <?php echo $data['movie']['Rated']; ?></p>
                     <p class="card-text"><strong>Released:</strong> <?php echo $data['movie']['Released']; ?></p>
@@ -24,15 +28,19 @@
                     <p class="card-text"><strong>Country:</strong> <?php echo $data['movie']['Country']; ?></p>
                     <p class="card-text"><strong>Awards:</strong> <?php echo $data['movie']['Awards']; ?></p>
                     <p class="card-text"><strong>IMDB Rating:</strong> <?php echo $data['movie']['imdbRating']; ?></p>
+
+                    <div class="text-center mt-4">
+                        <button id="rate-movie-btn" class="btn btn-primary">Rate this Movie</button>
+                    </div>
                 </div>
             </div>
         </div>
-        
     </div>
     <div class="text-center">
-        <a href="/searchmovie" class="btn btn-secondary">Back to Search</a>
+        <a href="/searchmovie" class="btn btn-secondary mt-3">Back to Search</a>
     </div>
 </main>
+
 
 
 <?php require_once 'app/views/templates/footer.php'; ?>
