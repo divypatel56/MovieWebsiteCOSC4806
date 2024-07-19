@@ -55,7 +55,14 @@ class SearchMovie extends Controller {
         $userRating = $movieModel->getUserRating($movieName, $userId);
     }
 
-    $this->view('searchmovie/results', ['movie' => $movieDetails, 'ratings' => $ratings, 'userRating' => $userRating]);
+    $movieReview = $apiModel->getMovieReview($movieName);
+
+    $this->view('searchmovie/results', [
+        'movie' => $movieDetails,
+        'ratings' => $ratings,
+        'userRating' => $userRating,
+        'generatedReview' => $movieReview
+    ]);
   }
 
   //Handel the rate movie button
