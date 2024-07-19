@@ -31,6 +31,15 @@
 
                     <div class="text-center mt-4">
                         <button id="rate-movie-btn" class="btn btn-primary">Rate this Movie</button>
+                        <?php if ($data['userRating']): ?>
+                            <div id="user-rating" class="mt-3">
+                                <p>Your rating: <span id="user-rating-value"><?php echo htmlspecialchars($data['userRating']['Ratings']); ?></span> out of 5</p>
+                            </div>
+                        <?php else: ?>
+                            <div id="user-rating" style="display: none;" class="mt-3">
+                                <p>Your rating: <span id="user-rating-value"></span> out of 5</p>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -41,6 +50,30 @@
     </div>
 </main>
 
+<script>
+document.getElementById('rate-movie-btn').addEventListener('click', function() {
+    var isLoggedIn = <?php echo isset($_SESSION['auth']) ? 'true' : 'false'; ?>;
+    if (!isLoggedIn) {
+        window.location.href = '/login';
+        return;
+    }
 
+    var rating = prompt("Please enter your rating (1-5):");
+    if (rating !== null) {
+        var movieName = "<?php echo addslashes($data['movie']['Title']); ?>"; // Ensure proper escaping
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/searchmovie/rate", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                alert("Rating submitted successfully!");
+                document.getElementById('user-rating').style.display = 'block';
+                document.getElementById('user-rating-value').textContent = rating;
+            }
+        };
+        xhr.send("rating=" + rating + "&movie_name=" + encodeURIComponent(movieName));
+    }
+});
+</script>
 
 <?php require_once 'app/views/templates/footer.php'; ?>

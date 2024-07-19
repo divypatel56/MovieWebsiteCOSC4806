@@ -21,18 +21,6 @@ class SearchMovie extends Controller {
         return;
       }
 
-      $movieModel = $this->model('Movie');
-      $ratings = $movieModel->getRatingsByMovie($movieName);
-
-      $userRating = null;
-      if (isset($_SESSION['auth'])) {
-          $userId = $_SESSION['userid'];
-          $userRating = $movieModel->getUserRating($movieName, $userId);
-      }
-
-      $this->view('searchmovie/results', ['movie' => $movieDetails, 'ratings' => $ratings, 'userRating' => $userRating]);
-      
-      // Redirect to the movie details function with the movie name
       header("Location: /searchmovie/movie/" . urlencode($movieName));
       exit();
     }
