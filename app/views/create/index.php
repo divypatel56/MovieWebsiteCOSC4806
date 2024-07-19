@@ -1,11 +1,25 @@
 <?php require_once 'app/views/templates/headerPublic.php'; ?>
-<link rel="stylesheet" href="/app/view/style/style.css">
+<style>
+    .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
 
+    body {
+        background: url('https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2059&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    @media (max-width: 576px) {
+        .page-header h1 {
+            font-size: 2.5rem;
+        }
+    }
+</style>
 
 <main role="main" class="container my-5">
     <div class="page-header text-center mb-4">
-        <h1 class="display-4">Sign Up</h1>
-        <p class="lead">Create a new account</p>
+        <h1 class="display-4 text-white">Sign Up</h1>
+        <p class="lead text-white">Create a new account</p>
     </div>
 
     <div class="row">
