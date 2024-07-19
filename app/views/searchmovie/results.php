@@ -59,22 +59,29 @@
 </main>
 
 <script>
-document.getElementById('rate-movie-btn').addEventListener('click', function() {
-    var rating = prompt("Please enter your rating (1-5):");
-    if (rating !== null) {
-        var movieName = "<?php echo htmlspecialchars($data['movie']['Title']); ?>";
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "/searchmovie/rate", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                alert(xhr.responseText);
-                location.reload();
+        document.getElementById('rate-movie-btn').addEventListener('click', function() {
+            var isLoggedIn = <?php echo isset($_SESSION['auth']) ? 'true' : 'false'; ?>;
+            if (!isLoggedIn) {
+                window.location.href = '/login';
+                return;
             }
-        };
-        xhr.send("rating=" + encodeURIComponent(rating) + "&movie_name=" + encodeURIComponent(movieName));
-    }
-});
+
+            var rating = prompt("Please enter your rating (1-5):");
+            if (rating !== null) {
+                var movieName = "<?php echo $data['movie']['Title']; ?>";
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/searchmovie/rate", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        alert("Rating submitted successfully!");
+                        document.getElementById('user-rating').style.display = 'block';
+                        document.getElementById('user-rating-value').textContent = rating;
+                    }
+                };
+                xhr.send("rating=" + rating + "&movie_name=" + movieName);
+            }
+        });
 </script>
 
 <?php require_once 'app/views/templates/footer.php'; ?>
