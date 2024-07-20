@@ -24,7 +24,7 @@ private $apiKey;
               array(
                   "parts" => array(
                       array(
-                          "text" => "Generate a movie review which contains ratings between 1 star to 5 star for the movie " . $title
+                          "text" => "Generate a movie revie for movie " . $title . " review contains the following movie details; Ratings, 1-5 lines movie review."
                       )
                   )
               )
