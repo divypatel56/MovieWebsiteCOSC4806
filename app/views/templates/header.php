@@ -33,11 +33,6 @@ if (!isset($_SESSION['auth'])) {
                 <li class="nav-item">
                     <a class="nav-link" href="/searchmovie">Search Movie</a>
                 </li>
-            </ul>
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="/profile">Profile</a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>

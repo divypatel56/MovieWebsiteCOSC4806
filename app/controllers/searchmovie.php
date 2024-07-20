@@ -41,10 +41,15 @@ class SearchMovie extends Controller {
     $movieDetails = $apiModel->getMovieDetails($movieName);
 
     // Check if there was an error fetching movie details
-      if (isset($movieDetails['Error'])) {
-        echo "Error fetching movie details: " . $movieDetails['Error'];
-        return;
-      }
+     if (isset($movieDetails['Error'])) {
+         $this->view('searchmovie/index', ['error' => 'Error fetching movie details: ' . $movieDetails['Error']]);
+         return;
+     }
+
+     if (empty($movieDetails)) {
+         $this->view('searchmovie/index', ['no_movie' => 'No movie exists with the provided name.']);
+         return;
+     }
     
     $movieModel = $this->model('Movie');
     $ratings = $movieModel->getRatingsByMovie($movieName);

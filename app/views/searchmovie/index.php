@@ -74,6 +74,12 @@ body {
         font-size: 2.5rem;
     }
 }
+
+/* Alert Styling */
+.alert {
+    margin-top: 20px;
+}
+
 </style>
 
 <main role="main" class="container main-container">
@@ -90,10 +96,16 @@ body {
                         <button class="btn btn-primary" type="submit">Search</button>
                     </div>
                 </form>
-                
+
                 <?php if (isset($data['error'])): ?>
-                    <div class="alert alert-danger mt-3">
+                    <div class="alert alert-danger">
                         <?php echo $data['error']; ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($data['no_movie'])): ?>
+                    <div class="alert alert-warning">
+                        <?php echo $data['no_movie']; ?>
                     </div>
                 <?php endif; ?>
             </div>
