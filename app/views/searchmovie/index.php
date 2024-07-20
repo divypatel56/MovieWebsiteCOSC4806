@@ -1,18 +1,23 @@
-<?php require_once 'app/views/templates/headerPublic.php'; ?>
+<?php require_once 'app/views/templates/movieheader.php'; ?>
 
 <style>
 /* Background Image */
 body {
-    background: url('https://images.pexels.com/photos/9433910/pexels-photo-9433910.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') no-repeat center center fixed;;
-    background-size:cover;
+    background: url('https://images.unsplash.com/photo-1677344297888-81f04aa12a60?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Main Container Styling */
+.main-container {
+    margin-top: 100px;
 }
 
 /* Form Container Styling */
 .form-container {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.95);
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     animation: fadeInUp 1s ease-in-out;
 }
 
@@ -37,10 +42,42 @@ body {
     background-color: #0056b3;
     transform: scale(1.05);
 }
+
+/* Custom Form Styling */
+.input-group {
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.input-group .form-control {
+    border: none;
+    box-shadow: none;
+}
+
+.input-group .btn-primary {
+    border-radius: 0;
+}
+
+/* Page Header */
+.page-header {
+    margin-bottom: 40px;
+}
+
+.page-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 576px) {
+    .page-header h1 {
+        font-size: 2.5rem;
+    }
+}
 </style>
 
-<main role="main" class="container my-5">
-    <div class="page-header text-center mb-4">
+<main role="main" class="container main-container">
+    <div class="page- text-center">
         <h1 class="display-4 text-white">Search Movie</h1>
     </div>
 
@@ -53,7 +90,7 @@ body {
                         <button class="btn btn-primary" type="submit">Search</button>
                     </div>
                 </form>
-
+                
                 <?php if (isset($data['error'])): ?>
                     <div class="alert alert-danger mt-3">
                         <?php echo $data['error']; ?>
