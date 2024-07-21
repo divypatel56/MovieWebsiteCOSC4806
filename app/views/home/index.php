@@ -5,7 +5,7 @@
         background-size: cover;
         color: #fff;
     }
-
+    
     @media (max-width: 576px) {
         .page-header h1 {
             font-size: 2.5rem;

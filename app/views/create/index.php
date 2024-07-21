@@ -21,7 +21,6 @@
         <h1 class="display-4 text-white">Sign Up</h1>
         <p class="lead text-white">Create a new account</p>
     </div>
-
     <div class="row">
         <div class="col-md-6 mx-auto">
             <?php if(isset($_SESSION['validation_errors'])): ?>
@@ -34,7 +33,6 @@
                 </div>
                 <?php unset($_SESSION['validation_errors']); ?>
             <?php endif; ?>
-
             <div class="card">
                 <div class="card-body">
                     <form action="/create/register" method="post">
